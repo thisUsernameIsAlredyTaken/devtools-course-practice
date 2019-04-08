@@ -4,7 +4,7 @@
 
 #include "include/complex_number.h"
 
-TEST(_ComplexNumberTest, Can_Create_Complex_Number) {
+TEST(Lname_Fname_ComplexNumberTest, Can_Create_Complex_Number) {
   // Arrange
   double re = 1.5;
   double im = -5.2;
@@ -17,7 +17,7 @@ TEST(_ComplexNumberTest, Can_Create_Complex_Number) {
   EXPECT_EQ(im, z.getIm());
 }
 
-TEST(_ComplexNumberTest, Addition_Of_Two_Complex_Number) {
+TEST(Lname_Fname_ComplexNumberTest, Addition_Of_Two_Complex_Number) {
   // Arrange
   double re1 = 1.5;
   double im1 = -5.2;
@@ -35,7 +35,7 @@ TEST(_ComplexNumberTest, Addition_Of_Two_Complex_Number) {
   EXPECT_EQ(im1 + im2, res.getIm());
 }
 
-TEST(_ComplexNumberTest, Division_Of_Two_Complex_Number) {
+TEST(Lname_Fname_ComplexNumberTest, Division_Of_Two_Complex_Number) {
   // Arrange
   double re1 = 6.5;
   double im1 = 0;
@@ -52,7 +52,7 @@ TEST(_ComplexNumberTest, Division_Of_Two_Complex_Number) {
   EXPECT_EQ(re1 / re2, res.getRe());
 }
 
-TEST(_ComplexNumberTest, Two_Complex_Number_With_Different_Values_Are_Not_Equal) {
+TEST(Lname_Fname_ComplexNumberTest, Two_Complex_Number_With_Different_Values_Are_Not_Equal) {
   // Arrange
   double re1 = 1.5;
   double im1 = -5.2;
