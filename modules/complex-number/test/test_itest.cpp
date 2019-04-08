@@ -66,5 +66,5 @@ TEST(Lname_Fname_ComplexNumberTest, Two_Complex_Values_Are_Not_Equal) {
   res = z1 == z2;
 
   // Assert
-  EXPECT_FALSE(res);
+  EXPECT_EQ(false, res);
 }
