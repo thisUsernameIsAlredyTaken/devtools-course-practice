@@ -51,20 +51,3 @@ TEST(_ComplexNumberTest, Division_Of_Two_Complex_Number) {
   // Assert
   EXPECT_EQ(re1 / re2, res.getRe());
 }
-
-TEST(_ComplexNumberTest, Two_Complex_Number_With_Different_Values_Are_Not_Equal) {
-  // Arrange
-  double re1 = 1.5;
-  double im1 = -5.2;
-  double re2 = 5.2;
-  double im2 = 1.3;
-  ComplexNumber z1(re1, im1);
-  ComplexNumber z2(re2, im2);
-  bool res;
-
-  // Act
-  res = z1 == z2;
-
-  // Assert
-  EXPECT_EQ(false, res);
-}
