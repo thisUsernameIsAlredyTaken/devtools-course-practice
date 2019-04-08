@@ -6,7 +6,7 @@
 
 TEST(_ComplexNumberTest, Can_Create_Complex_Number) {
   // Arrange
-  double re = 1.5;
+  double re = 1.6;
   double im = -5.2;
 
   // Act
