@@ -8,13 +8,6 @@
 #include <vector>
 #include <array>
 
-enum Modif {
-    kNone,
-    kSingle,
-    kAsterisk,
-    kQMark,
-    kRange,
-};
 
 class Matcher {
  public:
@@ -24,10 +17,14 @@ class Matcher {
     virtual ~Matcher();
  protected:
     Matcher *next_;
-    Modif mod_;
     int min_, max_;
 
+    void initModif(std::string::const_iterator&);
+
     static const std::array<char, 62> alphabet;
+
+ private:
+    static std::pair<int, int> parseBraces(std::string::const_iterator&);
 };
 
 class MCharSet : public Matcher {

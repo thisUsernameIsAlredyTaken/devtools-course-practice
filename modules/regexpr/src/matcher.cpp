@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -17,21 +18,80 @@ const array<char, 62> Matcher::alphabet({
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 });
 
+pair<int, int> Matcher::parseBraces(string::const_iterator &it) {
+    pair<int, int> result;
+    string str{""};
+    stringstream ss;
+
+    ++it;
+    while (*it != ',') {
+        str += *it;
+        ++it;
+    }
+    str += '\n';
+    ++it;
+
+    ss << str;
+
+    str.erase();
+    while (*it != '}') {
+        str += *it;
+        ++it;
+    }
+    str += '\n';
+    ++it;
+
+    ss << str;
+
+    ss >> result.first;
+    ss >> result.second;
+
+    return result;
+}
+
+void Matcher::initModif(string::const_iterator &it) {
+    if (*it == '{') {
+        auto range = parseBraces(it);
+
+        min_ = range.first;
+        max_ = range.second;
+    } else {
+        switch (*it) {
+         case '*':
+            min_ = 0;
+            max_ = -1;
+            ++it;
+            break;
+         case '+':
+            min_ = 1;
+            max_ = -1;
+            ++it;
+            break;
+         case '?':
+            min_ = 0;
+            max_ = 1;
+            ++it;
+            break;
+         default:
+            min_ = 1;
+            max_ = 1;
+            break;
+        };
+    }
+}
+
 void Matcher::setNext(Matcher *next) {
     next_ = next;
 }
 
 Matcher::Matcher()
-    : next_(nullptr), mod_(Modif::kNone), min_(-1), max_(-1) {}
+    : next_(nullptr), min_(0), max_(0) {}
 
 Matcher::~Matcher() {}
 
 
 
 bool MCharSet::match(string::const_iterator &it) const {
-    /*
-     * TODO
-     */
     if (chSet_.find(*it) != chSet_.end()) {
         ++it;
         return true;
@@ -63,6 +123,8 @@ MCharSet::MCharSet(string::const_iterator &it) {
         chSet_.insert(*it);
         ++it;
     }
+
+    initModif(it);
 }
 
 
