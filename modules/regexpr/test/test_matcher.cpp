@@ -82,16 +82,10 @@ TEST(MatcherTest, MCharSet_Range_CharClass) {
     // Arrange
     const std::string seq("[a-f]ghij");
     auto it = seq.begin();
-    std::set<char> s;
+    std::set<char> s {'a', 'b', 'c', 'd', 'e', 'f'};
 
     // Act
     MCharSet m(it);
-    s.insert('a');
-    s.insert('b');
-    s.insert('c');
-    s.insert('d');
-    s.insert('e');
-    s.insert('f');
 
     // Assert
     EXPECT_EQ(s, m.chSet_);
@@ -101,16 +95,49 @@ TEST(MatcherTest, MCharSet_Mixed_CharClass) {
     // Arrange
     const std::string seq("[a-def]ghij");
     auto it = seq.begin();
-    std::set<char> s;
+    std::set<char> s {'a', 'b', 'c', 'd', 'e', 'f'};
 
     // Act
     MCharSet m(it);
-    s.insert('a');
-    s.insert('b');
-    s.insert('c');
-    s.insert('d');
-    s.insert('e');
-    s.insert('f');
+
+    // Assert
+    EXPECT_EQ(s, m.chSet_);
+}
+
+TEST(MatcherTest, MCharSet_Mixed_CharClass_2) {
+    // Arrange
+    const std::string seq("[abc-f]ghij");
+    auto it = seq.begin();
+    std::set<char> s {'a', 'b', 'c', 'd', 'e', 'f'};
+
+    // Act
+    MCharSet m(it);
+
+    // Assert
+    EXPECT_EQ(s, m.chSet_);
+}
+
+TEST(MatcherTest, MCharSet_Mixed_CharClass_3) {
+    // Arrange
+    const std::string seq("[abc-fgh]ghij");
+    auto it = seq.begin();
+    std::set<char> s {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+    // Act
+    MCharSet m(it);
+
+    // Assert
+    EXPECT_EQ(s, m.chSet_);
+}
+
+TEST(MatcherTest, MCharSet_Mixed_CharClass_4) {
+    // Arrange
+    const std::string seq("[ab-de-gh]ghij");
+    auto it = seq.begin();
+    std::set<char> s {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+    // Act
+    MCharSet m(it);
 
     // Assert
     EXPECT_EQ(s, m.chSet_);

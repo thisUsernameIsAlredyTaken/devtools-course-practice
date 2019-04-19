@@ -6,6 +6,7 @@
 #include <string>
 #include <set>
 #include <vector>
+#include <array>
 
 enum Modif {
     kNone,
@@ -25,6 +26,8 @@ class Matcher {
     Matcher *next_;
     Modif mod_;
     int min_, max_;
+
+    static const std::array<char, 62> alphabet;
 };
 
 class MCharSet : public Matcher {
