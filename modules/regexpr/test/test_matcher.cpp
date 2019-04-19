@@ -10,6 +10,7 @@
 #undef private
 #undef protected
 
+using namespace std;
 
 TEST(MatcherTest, MCharSet_Moves_Iterator) {
     // Arrange
@@ -143,6 +144,78 @@ TEST(MatcherTest, MCharSet_Mixed_CharClass_4) {
     EXPECT_EQ(s, m.chSet_);
 }
 
+TEST(MatcherTest, MCharSet_Match_Moves_Iterator) {
+    // Arrange
+    const std::string seq{"[a-f]sssss"};
+    const string str{"bcccc"};
+    auto sit = seq.begin();
+    auto it = str.begin();
+    MCharSet m(sit);
 
+    // Act
+    m.match(it);
 
+    // Assert
+    EXPECT_EQ(next(str.begin(), 1), it);
+}
+
+TEST(MatcherTest, MCharSet_Match_Returns_True) {
+    // Arrange
+    const string seq{"[a-f]sssss"};
+    const string str{"dccccc"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m{sit};
+
+    // Act & Assert
+    EXPECT_TRUE(m.match(it));
+}
+
+TEST(MatcherTest, MCharSet_Match_Returns_False) {
+    // Arrange
+    const string seq{"[a-f]sssss"};
+    const string str{"gccccc"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m{sit};
+
+    // Act
+    EXPECT_FALSE(m.match(it));
+}
+
+/* TEST(MatcherTest, MCharSet_Match_Moves_Iterator) { */
+/*     // Arrange */
+
+/*     // Act */
+
+/*     // Assert */
+
+/* } */
+
+/* TEST(MatcherTest, MCharSet_Match_Moves_Iterator) { */
+/*     // Arrange */
+
+/*     // Act */
+
+/*     // Assert */
+
+/* } */
+
+/* TEST(MatcherTest, MCharSet_Match_Moves_Iterator) { */
+/*     // Arrange */
+
+/*     // Act */
+
+/*     // Assert */
+
+/* } */
+
+/* TEST(MatcherTest, MCharSet_Match_Moves_Iterator) { */
+/*     // Arrange */
+
+/*     // Act */
+
+/*     // Assert */
+
+/* } */
 

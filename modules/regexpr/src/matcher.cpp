@@ -32,6 +32,12 @@ bool MCharSet::match(string::const_iterator &it) const {
     /*
      * TODO
      */
+    if (chSet_.find(*it) != chSet_.end()) {
+        ++it;
+        return true;
+    }
+
+    ++it;
     return false;
 }
 
@@ -43,12 +49,6 @@ MCharSet::MCharSet(string::const_iterator &it) {
                 auto chSt = *it;
                 advance(it, 2);
                 auto chTo = *it;
-                /* for (auto st = find(alphabet.begin(), alphabet.end(), chSt); */
-                /*      st != find(alphabet.begin(), alphabet.end(), chTo); */
-                /*      ++st) { */
-                /*     chSet_.insert(*st); */
-                /*     cout << *st << endl; */
-                /* } */
                 for_each(find(alphabet.begin(), alphabet.end(), chSt),
                          next(find(alphabet.begin(), alphabet.end(), chTo),
                               1),
