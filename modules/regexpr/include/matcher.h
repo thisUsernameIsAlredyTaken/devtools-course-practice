@@ -1,3 +1,5 @@
+// Copyright 2019 Zhivaev Artem
+
 #ifndef MODULES_REGEXPR_INCLUDE_MATCH_NODE_H_
 #define MODULES_REGEXPR_INCLUDE_MATCH_NODE_H_
 
@@ -28,7 +30,7 @@ class Matcher {
 class MCharSet : public Matcher {
  public:
     virtual bool match(std::string::const_iterator &it) const override;
-    MCharSet(const std::string&);
+    MCharSet(std::string::const_iterator&);
  protected:
     std::set<char> chSet_;
 };
@@ -36,7 +38,7 @@ class MCharSet : public Matcher {
 class MGroup : public Matcher {
  public:
     virtual bool match(std::string::const_iterator &it) const override;
-    MGroup(const std::string&);
+    MGroup(std::string::const_iterator&);
     ~MGroup();
  protected:
     std::vector<Matcher*> members_;

@@ -1,4 +1,6 @@
-#include "include/match_node.h"
+// Copyright 2019 Zhivaev Artem
+
+#include "include/matcher.h"
 
 using std::string;
 
@@ -17,23 +19,32 @@ bool MCharSet::match(string::const_iterator &it) const {
     /*
      * TODO
      */
+    return false;
 }
 
-MCharSet::MCharSet(const string &s) {
+MCharSet::MCharSet(string::const_iterator &it) {
     /*
      * TODO
      */
+    if (*it == '[') {
+        while (*it != ']') {
+            ++it;
+        }
+        ++it;
+    } else {
+        ++it;
+    }
 }
-
 
 
 bool MGroup::match(string::const_iterator &it) const {
     /*
      * TODO
      */
+    return false;
 }
 
-MGroup::MGroup(const string &s) {
+MGroup::MGroup(string::const_iterator &it) {
     /*
      * TODO
      */
