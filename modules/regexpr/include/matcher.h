@@ -45,5 +45,5 @@ class MGroup : public Matcher {
     std::vector<Matcher*> members_;
 };
 
-#endif // MODULES_REGEXPR_INCLUDE_MATCHER_H_
+#endif  // MODULES_REGEXPR_INCLUDE_MATCHER_H_
 

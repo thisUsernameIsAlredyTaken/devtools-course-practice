@@ -14,7 +14,9 @@
 #undef protected
 
 
-using namespace std;
+using std::string;
+using std::set;
+
 
 TEST(MCharSetTest, Constructor_Moves_Iterator) {
     // Arrange

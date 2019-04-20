@@ -4,11 +4,11 @@
 #define MODULES_REGEXPR_INCLUDE_REGEXPR_H_
 
 class RegExpr {
-public:
-    RegExpr(){}
+ public:
+    RegExpr() {}
 
-private:
+ private:
 };
 
-#endif // MODULES_REGEXPR_INCLUDE_REGEXPR_H_
+#endif  // MODULES_REGEXPR_INCLUDE_REGEXPR_H_
 

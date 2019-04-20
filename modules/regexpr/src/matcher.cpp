@@ -2,11 +2,14 @@
 
 #include "include/matcher.h"
 
-#include <iostream>
 #include <algorithm>
 #include <sstream>
 
-using namespace std;
+using std::stringstream;
+using std::set;
+using std::array;
+using std::string;
+using std::pair;
 
 const array<char, 62> Matcher::kAlphabet = {{
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -136,6 +139,7 @@ MCharSet::MCharSet(string::const_iterator *ptrit) {
 
 
 bool MGroup::match(string::const_iterator *ptrit) const {
+    ptrit++;
     /*
      * TODO
      */
@@ -143,6 +147,7 @@ bool MGroup::match(string::const_iterator *ptrit) const {
 }
 
 MGroup::MGroup(string::const_iterator *ptrit) {
+    ptrit++;
     /*
      * TODO
      */
