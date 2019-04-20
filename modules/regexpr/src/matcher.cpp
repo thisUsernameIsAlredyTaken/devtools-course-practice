@@ -4,12 +4,17 @@
 
 #include <algorithm>
 #include <sstream>
+#include <utility>
+#include <string>
 
 using std::stringstream;
 using std::set;
 using std::array;
 using std::string;
 using std::pair;
+using std::find;
+using std::next;
+using std::for_each;
 
 const array<char, 62> Matcher::kAlphabet = {{
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -78,7 +83,7 @@ void Matcher::initModif(string::const_iterator *ptrit) {
             min_ = 1;
             max_ = 1;
             break;
-        };
+        }
     }
 }
 
