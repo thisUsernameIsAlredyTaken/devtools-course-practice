@@ -10,6 +10,9 @@
 #undef private
 #undef protected
 
+#include <string>
+#include <set>
+
 using namespace std;
 
 TEST(MCharSetTest, Constructor_Moves_Iterator) {
@@ -171,8 +174,8 @@ TEST(MCharSetTest, Match_Returns_False) {
     // Arrange
     const string seq("[a-f]sssss");
     const string str("gccccc");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act & Assert
@@ -296,8 +299,8 @@ TEST(MCharSetTest, Braces_Match_Moves_Iterator) {
     // Arrange
     const string seq("[a-f]{1,7}asdasd");
     const string str("abduuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -311,8 +314,8 @@ TEST(MCharSetTest, Braces_Match_Moves_Iterator_2) {
     // Arrange
     const string seq("[a-f]{1,7}asdasd");
     const string str("abcdefabcduuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -326,8 +329,8 @@ TEST(MCharSetTest, QMark_Match_Moves_Iterator) {
     // Arrange
     const string seq("[a-f]?asdasd");
     const string str("cuuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -341,8 +344,8 @@ TEST(MCharSetTest, QMark_Match_Moves_Iterator_2) {
     // Arrange
     const string seq("[a-f]?asdasd");
     const string str("uuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -356,8 +359,8 @@ TEST(MCharSetTest, Plus_Match_Moves_Iterator) {
     // Arrange
     const string seq("[a-f]+asdasd");
     const string str("duuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -371,8 +374,8 @@ TEST(MCharSetTest, Plus_Match_Moves_Iterator_2) {
     // Arrange
     const string seq("[a-f]+asdasd");
     const string str("dafbuuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -386,8 +389,8 @@ TEST(MCharSetTest, Asterisk_Match_Moves_Iterator) {
     // Arrange
     const string seq("[a-f]*asdasd");
     const string str("facduuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -401,8 +404,8 @@ TEST(MCharSetTest, Asterisk_Match_Moves_Iterator_2) {
     // Arrange
     const string seq("[a-f]*asdasd");
     const string str("uuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act
@@ -417,8 +420,8 @@ TEST(MCharSetTest, Braces_Match_Returns_True) {
     // Arrange
     const string seq("[a-f]{3,7}asdasd");
     const string str("abcuuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act & Assert
@@ -429,8 +432,8 @@ TEST(MCharSetTest, Braces_Match_Returns_True_2) {
     // Arrange
     const string seq("[a-f]{3,7}asdasd");
     const string str("abcfedcuuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act & Assert
@@ -441,8 +444,8 @@ TEST(MCharSetTest, Braces_Match_Returns_True_3) {
     // Arrange
     const string seq("[a-f]{3,7}asdasd");
     const string str("acfdcuuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act & Assert
@@ -453,8 +456,8 @@ TEST(MCharSetTest, Braces_Match_Returns_False) {
     // Arrange
     const string seq("[a-f]{3,7}asdasd");
     const string str("acuuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act & Assert
@@ -465,8 +468,8 @@ TEST(MCharSetTest, Asterisk_Match_Returns_True) {
     // Arrange
     const string seq("[a-f]*asdasd");
     const string str("uuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act & Assert
@@ -477,8 +480,8 @@ TEST(MCharSetTest, Asterisk_Match_Returns_True_2) {
     // Arrange
     const string seq("[a-f]*asdasd");
     const string str("acbfduuuuuu");
-    auto sit (seq.begin());
-    auto it (str.begin());
+    auto sit(seq.begin());
+    auto it(str.begin());
     MCharSet m(&sit);
 
     // Act & Assert

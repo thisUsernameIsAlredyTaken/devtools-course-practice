@@ -31,7 +31,7 @@ class Matcher {
 class MCharSet : public Matcher {
  public:
     bool match(std::string::const_iterator *ptrit) const override;
-    MCharSet(std::string::const_iterator *ptrit);
+    explicit MCharSet(std::string::const_iterator *ptrit);
  protected:
     std::set<char> chSet_;
 };
@@ -39,7 +39,7 @@ class MCharSet : public Matcher {
 class MGroup : public Matcher {
  public:
     bool match(std::string::const_iterator *ptrit) const override;
-    MGroup(std::string::const_iterator *ptrit);
+    explicit MGroup(std::string::const_iterator *ptrit);
     ~MGroup();
  protected:
     std::vector<Matcher*> members_;
