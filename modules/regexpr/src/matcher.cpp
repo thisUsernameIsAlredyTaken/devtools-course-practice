@@ -8,7 +8,7 @@
 
 using namespace std;
 
-const array<char, 62> Matcher::alphabet({
+const array<char, 62> Matcher::kAlphabet {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
     'u', 'v', 'w', 'x', 'y', 'z',
@@ -16,7 +16,7 @@ const array<char, 62> Matcher::alphabet({
     'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
     'U', 'V', 'W', 'X', 'Y', 'Z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-});
+};
 
 pair<int, int> Matcher::parseBraces(string::const_iterator &it) {
     pair<int, int> result;
@@ -51,10 +51,10 @@ pair<int, int> Matcher::parseBraces(string::const_iterator &it) {
 
 void Matcher::initModif(string::const_iterator &it) {
     if (*it == '{') {
-        auto range = parseBraces(it);
+        auto p = parseBraces(it);
 
-        min_ = range.first;
-        max_ = range.second;
+        min_ = p.first;
+        max_ = p.second;
     } else {
         switch (*it) {
          case '*':
@@ -92,13 +92,19 @@ Matcher::~Matcher() {}
 
 
 bool MCharSet::match(string::const_iterator &it) const {
-    if (chSet_.find(*it) != chSet_.end()) {
-        ++it;
-        return true;
+    int i;
+    for (i = 0; i != max_; ++i) {
+        if (chSet_.find(*it) != chSet_.end()) {
+            ++it;
+        } else {
+            break;
+        }
     }
 
-    ++it;
-    return false;
+    if (i < min_) {
+        return false;
+    }
+    return true;
 }
 
 MCharSet::MCharSet(string::const_iterator &it) {
@@ -109,8 +115,8 @@ MCharSet::MCharSet(string::const_iterator &it) {
                 auto chSt = *it;
                 advance(it, 2);
                 auto chTo = *it;
-                for_each(find(alphabet.begin(), alphabet.end(), chSt),
-                         next(find(alphabet.begin(), alphabet.end(), chTo),
+                for_each(find(kAlphabet.begin(), kAlphabet.end(), chSt),
+                         next(find(kAlphabet.begin(), kAlphabet.end(), chTo),
                               1),
                          [this](char ch) { chSet_.insert(ch); });
             } else {

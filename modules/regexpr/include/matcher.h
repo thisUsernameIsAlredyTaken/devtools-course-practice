@@ -16,12 +16,12 @@ class Matcher {
     Matcher();
     virtual ~Matcher();
  protected:
-    Matcher *next_;
+    Matcher *next_; /* if next_ matched, stop current matching */
     int min_, max_;
 
     void initModif(std::string::const_iterator&);
 
-    static const std::array<char, 62> alphabet;
+    static const std::array<char, 62> kAlphabet;
 
  private:
     static std::pair<int, int> parseBraces(std::string::const_iterator&);
