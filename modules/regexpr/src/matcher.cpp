@@ -6,6 +6,7 @@
 #include <sstream>
 #include <utility>
 #include <string>
+#include <set>
 
 using std::stringstream;
 using std::set;
@@ -164,8 +165,8 @@ MString::MString(string::const_iterator *ptrit) {
             != kMetaChars.end()) {
             if (*it == '\\') {
                 ++it;
-            } else if(*it == '*' || *it == '+'
-                      || *it == '?' || *it == '{') {
+            } else if (*it == '*' || *it == '+'
+                       || *it == '?' || *it == '{') {
                 mStr_ = mStr_.substr(0, mStr_.size() - 1);
                 advance(it, -1);
                 return;
