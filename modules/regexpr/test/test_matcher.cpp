@@ -2,6 +2,9 @@
 
 #include <gtest/gtest.h>
 
+#include <string>
+#include <set>
+
 #define protected public
 #define private   public
 
@@ -10,8 +13,6 @@
 #undef private
 #undef protected
 
-#include <string>
-#include <set>
 
 using namespace std;
 
