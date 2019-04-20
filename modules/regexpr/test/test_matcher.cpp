@@ -191,6 +191,94 @@ TEST(MCharSetTest, Match_Count_Braces_Moves_Iterator) {
     EXPECT_EQ(next(seq.begin(), 10), sit);
 }
 
+TEST(MCharSetTest, Match_Count_Astersisk_Moves_Iterator) {
+    // Arrange
+    const string seq("[abc-fgh]*qwerty");
+    auto it{seq.begin()};
+
+    // Act
+    MCharSet m{it};
+
+    // Assert
+    EXPECT_EQ(next(seq.begin(), 10), it);
+}
+
+TEST(MCharSetTest, Match_Count_Plus_Moves_Iterator) {
+    // Arrange
+    const string seq("[abc-fgh]+qwerty");
+    auto it{seq.begin()};
+
+    // Act
+    MCharSet m{it};
+
+    // Assert
+    EXPECT_EQ(next(seq.begin(), 10), it);
+}
+
+TEST(MCharSetTest, Match_Count_Question_Mark_Moves_Iterator) {
+    // Arrange
+    const string seq("[abc-fgh]?qwerty");
+    auto it{seq.begin()};
+
+    // Act
+    MCharSet m{it};
+
+    // Assert
+    EXPECT_EQ(next(seq.begin(), 10), it);
+}
+
+TEST(MCharSetTest, Match_Count_Braces_Init_Range) {
+    // Arrange
+    const string seq("[abc-fgh]{11,72}qwerty");
+    auto it{seq.begin()};
+
+    // Act
+    MCharSet m{it};
+
+    // Assert
+    EXPECT_EQ(11, m.min_);
+    EXPECT_EQ(72, m.max_);
+}
+
+TEST(MCharSetTest, Match_Count_Asterisk_Init_Range) {
+    // Arrange
+    const string seq("[abc-fgh]*qwerty");
+    auto it{seq.begin()};
+
+    // Act
+    MCharSet m{it};
+
+    // Assert
+    EXPECT_EQ(0, m.min_);
+    EXPECT_EQ(-1, m.max_);
+}
+
+TEST(MCharSetTest, Match_Count_Plus_Init_Range) {
+    // Arrange
+    const string seq("[abc-fgh]+qwerty");
+    auto it{seq.begin()};
+
+    // Act
+    MCharSet m{it};
+
+    // Assert
+    EXPECT_EQ(1, m.min_);
+    EXPECT_EQ(-1, m.max_);
+}
+
+TEST(MCharSetTest, Match_Count_Question_Mark_Init_Range) {
+    // Arrange
+    const string seq("[abc-fgh]?qwerty");
+    auto it{seq.begin()};
+
+    // Act
+    MCharSet m{it};
+
+    // Assert
+    EXPECT_EQ(0, m.min_);
+    EXPECT_EQ(1, m.max_);
+}
+
 TEST(MCharSetTest, Match_Count_Init_Braces) {
     // Arrange
     const string seq{"[a-f]{1,7}asdasd"};
@@ -204,39 +292,214 @@ TEST(MCharSetTest, Match_Count_Init_Braces) {
     EXPECT_EQ(m.max_, 7);
 }
 
-/* TEST(MCharSetTest, Match_Moves_Iterator) { */
-/*     // Arrange */
+TEST(MCharSetTest, Braces_Match_Moves_Iterator) {
+    // Arrange
+    const string seq {"[a-f]{1,7}asdasd"};
+    const string str {"abduuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
 
-/*     // Act */
+    // Act
+    m.match(it);
 
-/*     // Assert */
+    // Assert
+    EXPECT_EQ(next(str.begin(), 3), it);
+}
 
-/* } */
+TEST(MCharSetTest, Braces_Match_Moves_Iterator_2) {
+    // Arrange
+    const string seq {"[a-f]{1,7}asdasd"};
+    const string str {"abcdefabcduuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
 
-/* TEST(MCharSetTest, Match_Moves_Iterator) { */
-/*     // Arrange */
+    // Act
+    m.match(it);
 
-/*     // Act */
+    // Assert
+    EXPECT_EQ(next(str.begin(), 7), it);
+}
 
-/*     // Assert */
+TEST(MCharSetTest, QMark_Match_Moves_Iterator) {
+    // Arrange
+    const string seq {"[a-f]?asdasd"};
+    const string str {"cuuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
 
-/* } */
+    // Act
+    m.match(it);
 
-/* TEST(MCharSetTest, Match_Moves_Iterator) { */
-/*     // Arrange */
+    // Assert
+    EXPECT_EQ(next(str.begin(), 1), it);
+}
 
-/*     // Act */
+TEST(MCharSetTest, QMark_Match_Moves_Iterator_2) {
+    // Arrange
+    const string seq {"[a-f]?asdasd"};
+    const string str {"uuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
 
-/*     // Assert */
+    // Act
+    m.match(it);
 
-/* } */
+    // Assert
+    EXPECT_EQ(str.begin(), it);
+}
 
-/* TEST(MCharSetTest, Match_Moves_Iterator) { */
-/*     // Arrange */
+TEST(MCharSetTest, Plus_Match_Moves_Iterator) {
+    // Arrange
+    const string seq {"[a-f]+asdasd"};
+    const string str {"duuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
 
-/*     // Act */
+    // Act
+    m.match(it);
 
-/*     // Assert */
+    // Assert
+    EXPECT_EQ(next(str.begin(), 1), it);
+}
 
-/* } */
+TEST(MCharSetTest, Plus_Match_Moves_Iterator_2) {
+    // Arrange
+    const string seq {"[a-f]+asdasd"};
+    const string str {"dafbuuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act
+    m.match(it);
+
+    // Assert
+    EXPECT_EQ(next(str.begin(), 4), it);
+}
+
+TEST(MCharSetTest, Asterisk_Match_Moves_Iterator) {
+    // Arrange
+    const string seq {"[a-f]*asdasd"};
+    const string str {"facduuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act
+    m.match(it);
+
+    // Assert
+    EXPECT_EQ(next(str.begin(), 4), it);
+}
+
+TEST(MCharSetTest, Asterisk_Match_Moves_Iterator_2) {
+    // Arrange
+    const string seq {"[a-f]*asdasd"};
+    const string str {"uuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act
+    m.match(it);
+
+    // Assert
+    EXPECT_EQ(str.begin(), it);
+}
+
+
+TEST(MCharSetTest, Braces_Match_Returns_True) {
+    // Arrange
+    const string seq {"[a-f]{3,7}asdasd"};
+    const string str {"abcuuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act & Assert
+    EXPECT_TRUE(m.match(it));
+}
+
+TEST(MCharSetTest, Braces_Match_Returns_True_2) {
+    // Arrange
+    const string seq {"[a-f]{3,7}asdasd"};
+    const string str {"abcfedcuuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act & Assert
+    EXPECT_TRUE(m.match(it));
+}
+
+TEST(MCharSetTest, Braces_Match_Returns_True_3) {
+    // Arrange
+    const string seq {"[a-f]{3,7}asdasd"};
+    const string str {"acfdcuuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act & Assert
+    EXPECT_TRUE(m.match(it));
+}
+
+TEST(MCharSetTest, Braces_Match_Returns_False) {
+    // Arrange
+    const string seq {"[a-f]{3,7}asdasd"};
+    const string str {"acuuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act & Assert
+    EXPECT_FALSE(m.match(it));
+}
+
+TEST(MCharSetTest, Asterisk_Match_Returns_True) {
+    // Arrange
+    const string seq {"[a-f]*asdasd"};
+    const string str {"uuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act & Assert
+    EXPECT_TRUE(m.match(it));
+}
+
+TEST(MCharSetTest, Asterisk_Match_Returns_True_2) {
+    // Arrange
+    const string seq {"[a-f]*asdasd"};
+    const string str {"acbfduuuuuu"};
+    auto sit {seq.begin()};
+    auto it {str.begin()};
+    MCharSet m {sit};
+
+    // Act & Assert
+    EXPECT_TRUE(m.match(it));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
