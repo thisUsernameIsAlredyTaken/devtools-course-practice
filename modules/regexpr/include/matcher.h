@@ -23,6 +23,7 @@ class Matcher {
     void initModif(std::string::const_iterator *ptrit);
 
     static const std::array<char, 62> kAlphabet;
+    static const std::set<char> kMetaChars;
 
  private:
     static std::pair<int, int> parseBraces(std::string::const_iterator *pit);
@@ -32,8 +33,18 @@ class MCharSet : public Matcher {
  public:
     bool match(std::string::const_iterator *ptrit) const override;
     explicit MCharSet(std::string::const_iterator *ptrit);
+
  protected:
     std::set<char> chSet_;
+};
+
+class MString : public Matcher {
+ public:
+    bool match(std::string::const_iterator *ptrit) const override;
+    explicit MString(std::string::const_iterator *ptrit);
+
+ protected:
+    std::string mStr_;
 };
 
 class MGroup : public Matcher {

@@ -23,6 +23,9 @@ const array<char, 62> Matcher::kAlphabet = {{
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }};
 
+const set<char> Matcher::kMetaChars = {
+    '\\', '*', '+', '?', '.', '[', ']', '(', ')' };
+
 pair<int, int> Matcher::parseBraces(string::const_iterator *ptrit) {
     string::const_iterator &it = *ptrit;
     pair<int, int> result;
@@ -140,6 +143,40 @@ MCharSet::MCharSet(string::const_iterator *ptrit) {
     }
 
     initModif(ptrit);
+}
+
+bool MString::match(string::const_iterator *ptrit) const {
+    auto &it = *ptrit;
+
+    if (std::equal(mStr_.begin(), mStr_.end(), it)) {
+        advance(it, mStr_.size());
+        return true;
+    }
+
+    return false;
+}
+
+MString::MString(string::const_iterator *ptrit) {
+    auto &it = *ptrit;
+
+    while (true) {
+        if (find(kMetaChars.begin(), kMetaChars.end(), *it)
+            != kMetaChars.end()) {
+            if (*it == '\\') {
+                ++it;
+            } else if(*it == '*' || *it == '+'
+                      || *it == '?' || *it == '{') {
+                mStr_ = mStr_.substr(0, mStr_.size() - 1);
+                advance(it, -1);
+                return;
+            } else {
+                return;
+            }
+        }
+
+        mStr_ += *it;
+        ++it;
+    }
 }
 
 
