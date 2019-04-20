@@ -15,7 +15,8 @@ const array<char, 62> Matcher::kAlphabet = {{
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }};
 
-pair<int, int> Matcher::parseBraces(string::const_iterator &it) {
+pair<int, int> Matcher::parseBraces(string::const_iterator *ptrit) {
+    string::const_iterator &it = *ptrit;
     pair<int, int> result;
     string str("");
     stringstream ss;
@@ -46,9 +47,10 @@ pair<int, int> Matcher::parseBraces(string::const_iterator &it) {
     return result;
 }
 
-void Matcher::initModif(string::const_iterator &it) {
+void Matcher::initModif(string::const_iterator *ptrit) {
+    string::const_iterator &it = *ptrit;
     if (*it == '{') {
-        auto p = parseBraces(it);
+        auto p = parseBraces(ptrit);
 
         min_ = p.first;
         max_ = p.second;
@@ -88,7 +90,8 @@ Matcher::~Matcher() {}
 
 
 
-bool MCharSet::match(string::const_iterator &it) const {
+bool MCharSet::match(string::const_iterator *ptrit) const {
+    string::const_iterator &it = *ptrit;
     int i;
     for (i = 0; i != max_; ++i) {
         if (chSet_.find(*it) != chSet_.end()) {
@@ -104,7 +107,8 @@ bool MCharSet::match(string::const_iterator &it) const {
     return true;
 }
 
-MCharSet::MCharSet(string::const_iterator &it) {
+MCharSet::MCharSet(string::const_iterator *ptrit) {
+    string::const_iterator &it = *ptrit;
     if (*it == '[') {
         ++it;
         while (*it != ']') {
@@ -127,18 +131,18 @@ MCharSet::MCharSet(string::const_iterator &it) {
         ++it;
     }
 
-    initModif(it);
+    initModif(ptrit);
 }
 
 
-bool MGroup::match(string::const_iterator &it) const {
+bool MGroup::match(string::const_iterator *ptrit) const {
     /*
      * TODO
      */
     return false;
 }
 
-MGroup::MGroup(string::const_iterator &it) {
+MGroup::MGroup(string::const_iterator *ptrit) {
     /*
      * TODO
      */
